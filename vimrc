@@ -23,7 +23,7 @@ set softtabstop=4
 set shiftwidth=4
 
 " 不要用空格代替制表符
-set noexpandtab
+set expandtab
 
 " 在行和段开始处使用制表符
 set smarttab
@@ -142,26 +142,28 @@ endif " has("autocmd")
 " C的编译和运行
 map <F8> :call CompileRunGcc()<CR>
 func! CompileRunGcc()
-exec "w"
+exec "wall"
 exec "!gcc % -o %<"
-exec "! %<"
+exec "! ./%<"
 endfunc
 
 " C++的编译和运行
 map <F9> :call CompileRunGpp()<CR>
 func! CompileRunGpp()
-exec "w"
+exec "wall"
 exec "!g++ % -o %<"
-exec "!%<"
+exec "!./%<"
+endfunc
+
+map <F10> :call CompileRunHaskell()<CR>
+func! CompileRunHaskell()
+exec "wall"
+exec "!ghc %"
+exec "!./%<"
 endfunc
 
 " OpenGL的编译和运行
-map <F6> :call CompileRunOpenGL()<CR>
-func! CompileRunOpenGL()
-exec "w"
-exec "!gcc % -o %< -lGL -lGLU -lglut"
-exec "!%<"
-endfunc
+map <F6> :wall<CR>:!go run %<CR>
 
 " python的编译和运行
 map <F7> :wall<CR>:!python %<CR>
@@ -190,4 +192,4 @@ au BufRead,BufNewFile *  setfiletype txt
 let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplMapWindowNavArrows = 1
 let g:miniBufExplMapCTabSwitchBufs = 1
-let g:miniBufExplModSelTarget = 1  
+let g:miniBufExplModSelTarget = 1
